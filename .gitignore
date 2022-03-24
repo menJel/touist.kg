@@ -1,0 +1,8 @@
+venv/
+env/
+__paycash__/
+db.splite3
+*.pyc
+*.pot
+*.lot
+.idea/
