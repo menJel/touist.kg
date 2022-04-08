@@ -1,11 +1,3 @@
-from cgitb import text
-from distutils.command.upload import upload
-import imp
-from operator import mod
-from tabnanny import verbose
-from turtle import title, update
-from unicodedata import category, name
-from venv import create
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -41,6 +33,18 @@ class Post(models.Model):
         return self.title #Меняет название объекта
 
 class Comment(models.Model):
-    name = models.CharField("Имя", max_length=50)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Автор",related_name="comments", null=True)
     comment = models.TextField("Комментарий")
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True, null=True)
+
+
+    class Meta:
+        verbose_name = "Комментарий"
+        verbose_name_plural = "Комментарии"
+        ordering = ['-created']
+    
+    def __str__(self):
+        return str(self.comment)[:50]
+
+
